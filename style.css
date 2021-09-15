@@ -1,0 +1,67 @@
+body {
+	margin: 0;
+	background-color: aliceblue;
+	display: flex;
+	justify-content: center;
+}
+
+main {
+	position: relative;
+	border: 5px solid darkslategrey;
+	border-radius: 10px;
+	overflow: hidden;
+	display: grid;
+	grid-template-columns: repeat(8, auto);
+}
+main div{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2rem;
+}
+main div img{
+	height: 80%;
+}
+
+.co-ordinates {
+	position: absolute;
+	top: 0%;
+	left: -7%;
+	z-index: -1;
+}
+.vertical-names{
+	height: 100%;
+	font-size: 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+.horizontal-names{
+	margin-left: 8%;
+	margin-top: 2%;
+	width: 100%;
+	font-size: 2rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+.dot::after{
+	content: '';
+	height: 20%;
+	width: 20%;
+	background-color: lightgrey;
+	border-radius: 50%;
+}
+button {
+	position: absolute;
+	right: -20%;
+	top: 10%;
+	padding: 5px 10px;
+	background-color: blueviolet;
+	color: white;
+	border: 0;
+	border-radius: 5px;
+	font-size: 1rem;
+	font-weight: 600;
+	letter-spacing: 2px;
+}
