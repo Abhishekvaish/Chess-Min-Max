@@ -1,8 +1,8 @@
 "use strict";
 
-const MAIN_CHESS_GRID = new Chess()
+var MAIN_CHESS_GRID = new Chess()
 var CURRENT_MOVE = null
-
+var turnIndicator = null
 
 document.addEventListener( "DOMContentLoaded" , ()=>{
 
@@ -13,6 +13,22 @@ document.addEventListener( "DOMContentLoaded" , ()=>{
 	coordinates.style.height = Math.floor( 0.8 * Math.min(window.innerHeight , window.innerWidth))+"px"
 	coordinates.style.width = coordinates.style.height
 	// console.log(findBestMove(MAIN_CHESS_GRID))
+
+	// buttons onclicks
+	document.querySelector(".undo").addEventListener('click',()=>{
+		if (MAIN_CHESS_GRID.turn() == 'w'){
+			MAIN_CHESS_GRID.undo()
+			MAIN_CHESS_GRID.undo()
+			intializeChessGrid()
+		}
+	})
+	document.querySelector(".reset").addEventListener('click',()=>{
+		MAIN_CHESS_GRID = new Chess()
+		intializeChessGrid()
+	})
+
+	turnIndicator = document.querySelector('.buttons h2')
+
 
 })
 
@@ -76,6 +92,8 @@ const showPossibleMoves = (ele) => {
 			MAIN_CHESS_GRID.move(move[0])
 			intializeChessGrid()
 			CURRENT_MOVE = null
+
+			turnIndicator.innerText  = "Computers Turn - Black"
 			// playBot()
 			setTimeout(playBot , 100)
 		}
@@ -83,12 +101,13 @@ const showPossibleMoves = (ele) => {
 }
 
 const playBot = async () => {
-	console.log("thinking!!!!.........")
+	// console.log("thinking!!!!.........")
 	if( MAIN_CHESS_GRID.turn() == 'b'){
 		let bestMove = findBestMove(MAIN_CHESS_GRID)
 		MAIN_CHESS_GRID.move(bestMove)
 		intializeChessGrid()
-		console.log("played")
+		// console.log("played")
+		turnIndicator.innerText  = "Your Turn - White"
 	}
 }
 

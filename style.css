@@ -2,7 +2,9 @@ body {
 	margin: 0;
 	background-color: aliceblue;
 	display: flex;
-	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	flex-direction: column;
 }
 
 main {
@@ -52,10 +54,19 @@ main div img{
 	background-color: lightgrey;
 	border-radius: 50%;
 }
-button {
-	position: absolute;
-	right: -20%;
-	top: 10%;
+.buttons {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	margin-top: 1rem;
+}
+.buttons h2{
+	width: 25%;
+}
+button.undo {
+	margin-top: .6rem;
+	width: 100px;
+	margin-bottom: 1rem;
 	padding: 5px 10px;
 	background-color: blueviolet;
 	color: white;
@@ -64,4 +75,20 @@ button {
 	font-size: 1rem;
 	font-weight: 600;
 	letter-spacing: 2px;
+	cursor: pointer;
+}
+button.reset {
+	margin-top: .6rem;
+	width: 100px;
+	margin-left: 1%;
+	margin-bottom: 1rem;
+	padding: 5px 10px;
+	background-color: indianred;
+	color: white;
+	border: 0;
+	border-radius: 5px;
+	font-size: 1rem;
+	font-weight: 600;
+	letter-spacing: 2px;
+	cursor: pointer;
 }
