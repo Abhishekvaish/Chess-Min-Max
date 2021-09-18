@@ -94,11 +94,39 @@ const showPossibleMoves = (ele) => {
 			CURRENT_MOVE = null
 
 			turnIndicator.innerText  = "Computers Turn - Black"
-			// playBot()
-			setTimeout(playBot , 100)
+			if(!checkGameOver())
+				setTimeout(playBot , 100)
 		}
 	}
 }
+
+const checkGameOver = () => {
+	if (MAIN_CHESS_GRID.game_over()){
+
+		if (MAIN_CHESS_GRID.in_stalemate())	
+			swal("Draw", "Stalement");
+		else if( MAIN_CHESS_GRID.in_threefold_repetition() )
+			swal("Draw","Threefold Repetition")
+		else if ( MAIN_CHESS_GRID.in_draw() )
+			swal("Draw"," 50-move rule or insufficient material idk")
+		else if (MAIN_CHESS_GRID.in_checkmate()){
+
+			if (MAIN_CHESS_GRID.turn() == 'b' ){
+				swal("Win","white won")
+			}else {
+				swal("Lose","Black wins")
+			}
+
+		}else{
+			swal("GameOver","this alert should never appear")
+		}
+
+		return true
+	}
+	return false
+}
+
+
 
 const playBot = async () => {
 	// console.log("thinking!!!!.........")
