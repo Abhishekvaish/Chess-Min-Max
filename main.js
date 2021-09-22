@@ -1,4 +1,5 @@
 "use strict";
+// 188500
 
 var MAIN_CHESS_GRID = new Chess()
 var CURRENT_MOVE = null
@@ -131,7 +132,7 @@ const checkGameOver = () => {
 const playBot = async () => {
 	// console.log("thinking!!!!.........")
 	if( MAIN_CHESS_GRID.turn() == 'b'){
-		let bestMove = findBestMove(MAIN_CHESS_GRID)
+		let bestMove = findBestMoveAlphaBeta(MAIN_CHESS_GRID)
 		MAIN_CHESS_GRID.move(bestMove)
 		intializeChessGrid()
 		// console.log("played")
@@ -161,9 +162,67 @@ const score = (board) => {
 	return total_score
 }
 
+const depthMoves = (chess , depth ) => {
+	let totalMoves = 0
+	for(let move1 of chess.moves()){
+		let chessCopy1 = new Chess(chess.fen())
+		chessCopy1.move(move1)
+		for (let move2 of chessCopy1.moves() ){
+			let chessCopy2 = new Chess(chessCopy1.fen())
+			chessCopy2.move(move2)
+			totalMoves+= chessCopy1.moves().length
+		}
+	}
+	return totalMoves
+
+}
+
+
+const alphabeta = (chess , depth ,alpha ,beta)  => {
+	if ( chess.in_checkmate() && chess.turn() == 'w' )
+		return 100
+	if ( chess.in_checkmate() && chess.turn() == 'b' )
+		return -100
+	if (depth > 1){
+		return score(chess.board())
+	}
+
+	let allPossibleMoves = chess.moves()
+	if (chess.turn() == 'b'){	
+		let maxScore = -Infinity
+		for(let move of allPossibleMoves){
+			let chessCopy = new Chess(chess.fen())
+			chessCopy.move(move)
+			let currentScore = alphabeta(chessCopy , depth+1 , alpha , beta)
+			maxScore = Math.max(maxScore , currentScore)
+			alpha = Math.max(maxScore , alpha)
+			if (alpha >= beta)
+				break
+		}
+		return maxScore
+
+	}else{
+		let minScore = Infinity
+		for(let move of allPossibleMoves){
+			let chessCopy = new Chess(chess.fen())
+			chessCopy.move(move)
+			let currentScore = alphabeta(chessCopy , depth+1 , alpha , beta)
+			minScore = Math.min(minScore , currentScore)
+			beta = Math.min(minScore , beta)
+			if (alpha >= beta)
+				break
+		}
+		return minScore
+
+	}
+
+
+
+}
+
+
 // computer plays black
 const minmax = (chess , depth) => {
-
 	if ( chess.in_checkmate() && chess.turn() == 'w' )
 		return 100
 	if ( chess.in_checkmate() && chess.turn() == 'b' )
@@ -191,6 +250,22 @@ const minmax = (chess , depth) => {
 }
 
 // computer plays black
+const findBestMoveAlphaBeta = (chess) => {
+	let maxScore = -Infinity
+	let maxScoreMove = null
+	let currentScore = null
+	for( let move of chess.moves() ){
+		let chessCopy = new Chess(chess.fen())
+		chessCopy.move(move)
+		currentScore = alphabeta(chessCopy , 0 , -Infinity , Infinity )
+		if (currentScore  > maxScore){
+			maxScore = currentScore
+			maxScoreMove = move
+		}
+	}
+	return maxScoreMove
+
+}
 const findBestMove = (chess) => {
 
 	let allPossibleMoves = chess.moves()
