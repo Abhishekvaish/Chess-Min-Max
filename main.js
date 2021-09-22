@@ -39,8 +39,8 @@ const intializeChessGrid = () => {
 	let board = MAIN_CHESS_GRID.board()
 
 	let mainDiv = document.querySelector("main")
+	document.querySelector(".buttons").style.width = `${divHeight*8}px`
 	mainDiv.innerHTML = ""
-
 	mainDiv.style.width = `${divHeight*8}px`
 	mainDiv.style.height = `${divHeight*8}px`
 

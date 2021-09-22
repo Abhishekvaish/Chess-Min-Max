@@ -55,13 +55,11 @@ main div img{
 	border-radius: 50%;
 }
 .buttons {
-	display: flex;
-	width: 100%;
-	justify-content: center;
 	margin-top: 1rem;
 }
 .buttons h2{
-	width: 25%;
+	width: 58%;
+	display: inline-block;
 }
 button.undo {
 	margin-top: .6rem;
